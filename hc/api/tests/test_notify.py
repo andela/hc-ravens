@@ -223,3 +223,43 @@ class NotifyTestCase(BaseTestCase):
         self.assertEqual(json["message_type"], "CRITICAL")
 
     ### Test that the web hooks handle connection errors and error 500s
+    @patch("hc.api.transports.requests.request")
+    def test_webhook_handles_500(self, mock_post):
+        """Test webhooks handle a 500 status code"""
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 500
+
+        self.channel.notify(self.check)
+        notification = Notification.objects.get()  
+        self.assertEqual(notification.error, "Received status code 500")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhook_handles_501(self, mock_post):
+        """Test webhooks handle a 501 status code"""
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 501
+
+        self.channel.notify(self.check)
+        notification = Notification.objects.get()  
+        self.assertEqual(notification.error, "Received status code 501")
+
+    @patch("hc.api.transports.requests.request", side_effect=ConnectionError)
+    def test_webhook_handles_connection_errors(self, mock_get):
+        """Test webhooks handles connection errors"""
+        self._setup_data("webhook", "http://error")
+        self.channel.notify(self.check)
+
+        notification = Notification.objects.get()   
+        self.assertEqual(notification.error, "Connection failed")
+
+    @patch("hc.api.transports.requests.request", side_effect=Timeout)
+    def test_webhook_handles_timeout_error(self, mock_get):
+        """Test webhooks handles Timeout error"""
+        self._setup_data("webhook", "http://error")
+        self.channel.notify(self.check)
+
+        notification = Notification.objects.get()   
+        self.assertEqual(notification.error, "Connection timed out")        
+
+
+
