@@ -26,7 +26,6 @@ class CheckTokenTestCase(BaseTestCase):
     def test_login_redirects(self):
         self.client.login(username="alice@example.org", password="password")
         r = self.client.post("/accounts/check_token/alice/secret-token/")
-        print("bett", r)
         self.assertRedirects(r, "/checks/")
 
     ### Login with a bad token and check that it redirects
@@ -34,7 +33,6 @@ class CheckTokenTestCase(BaseTestCase):
     def test_login_bad_token(self):
         self.client.login(username="alice@example.org", password="password")
         r = self.client.post("/accounts/check_token/alice/secret/")
-        print('sradgh', r)
         self.assertRedirects(r, "/checks/")
 
     ### Any other tests?
