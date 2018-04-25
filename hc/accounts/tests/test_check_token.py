@@ -23,6 +23,16 @@ class CheckTokenTestCase(BaseTestCase):
 
     ### Login and test it redirects already logged in
 
+    def test_login_redirects(self):
+        self.client.login(username="alice@example.org", password="password")
+        r = self.client.post("/accounts/check_token/alice/secret-token/")
+        self.assertRedirects(r, "/checks/")
+
     ### Login with a bad token and check that it redirects
+
+    def test_login_bad_token(self):
+        self.client.login(username="alice@example.org", password="password")
+        r = self.client.post("/accounts/check_token/alice/secret/")
+        self.assertRedirects(r, "/checks/")
 
     ### Any other tests?
