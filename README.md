@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/andela/hc-ravens.svg?branch=ft-ci-integrations-157002741)](https://travis-ci.org/andela/hc-ravens)
+[![Coverage Status](https://coveralls.io/repos/github/andela/hc-ravens/badge.svg?branch=ft-ci-integrations-157002741)](https://coveralls.io/github/andela/hc-ravens?branch=ft-ci-integrations-157002741)
 # healthchecks
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
