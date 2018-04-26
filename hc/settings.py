@@ -156,4 +156,4 @@ else:
     warnings.warn("local_settings.py not found, using defaults")
 
 
-django_heroku(locals())
+django_heroku.settings(locals())
