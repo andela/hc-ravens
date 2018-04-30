@@ -19,7 +19,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = []
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+DEFAULT_FROM_EMAIL = 'hc-ravens.herokuapp.com'
 USE_PAYMENTS = False
 
 
@@ -49,6 +49,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'hc.accounts.middleware.TeamAccessMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -120,7 +121,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000"
+SITE_ROOT = "http://hc-ravens.herokuapp.com"
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
@@ -131,9 +132,17 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+DJMAIL_REAL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "hcravens25"
+EMAIL_HOST_PASSWORD = "ravens2018"
+EMAIL_USE_TLS = True
 
 # Slack integration -- override these in local_settings
 SLACK_CLIENT_ID = None
