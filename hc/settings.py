@@ -19,7 +19,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = []
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+DEFAULT_FROM_EMAIL = 'hc-ravens.herokuapp.com'
 USE_PAYMENTS = False
 
 
@@ -121,7 +121,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://healthchecks-ravens.herokuapp.com"
+SITE_ROOT = "http://hc-ravens.herokuapp.com"
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
