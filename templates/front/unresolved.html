@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <h1>
         {% if request.team == request.user.profile %}
-            My Checks
+            My Unresolved Checks
         {% else %}
             {{ request.team.team_name }}
         {% endif %}

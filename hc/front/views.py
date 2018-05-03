@@ -66,11 +66,11 @@ def unresolved_checks(request):
 
     counter = Counter()
     down_tags = set()
+    checks = [ch for ch in checks if ch.get_status() == "down"]
     for check in checks:
-        status = check.get_status()
 
         for tag in check.tags_list():
-            if tag == "down_tag":
+            if tag == "":
                 continue
 
             counter[tag] += 1
