@@ -30,10 +30,11 @@ class ProfileTestCase(BaseTestCase):
         check.save()
         length = len(mail.outbox)
 
-        self.alice.profile.send_report()
+        self.alice.profile.send_report(days=30)
 
         ###Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), length+1)
+        print('mail',mail.outbox[0].body)
         self.assertEqual(mail.outbox[0].subject, 'Monthly Report')
 
     def test_it_adds_team_member(self):
