@@ -50,13 +50,28 @@ class Command(BaseCommand):
             check.nag_after = now + check.nag
         check.save()
 
+        # tmpl = "\nSending alert, status=%s, code=%s\n"
+        # self.stdout.write(tmpl % (check.status, check.code))
+        # errors = check.send_alert()
+        # for ch, error in errors:
+        #     print(ch.kind)
+        #     self.stdout.write("ERROR: %s %s %s\n" % (ch.kind, ch.value, error))
+        self.send_alert(check)
+        connection.close()
+        return True
+
+    def send_alert(self, check):
+        """
+        This helper method  notifies a user
+        """
         tmpl = "\nSending alert, status=%s, code=%s\n"
         self.stdout.write(tmpl % (check.status, check.code))
         errors = check.send_alert()
-        for ch, error in errors:
-            print(ch.kind)
-            self.stdout.write("ERROR: %s %s %s\n" % (ch.kind, ch.value, error))
-
+        if errors is not None:
+            for ch, error in errors:
+                self.stdout.write("ERROR: %s %s %s\n" %
+                                (ch.kind, ch.value, error))
+                                
         connection.close()
         return True
 
