@@ -87,11 +87,25 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
+        if self.status == 'often':
+            if now > self.next_ping:
+                return "down"
+            return self.status
 
+        now = timezone.now()
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
 
-        return "down"
+        return 'down'
+
+    def running_too_often(self):
+        if not self.last_ping:
+            return False
+
+        now = timezone.now()
+        if self.next_ping - self.grace > now:
+            self.send_alert()
+            return True
 
     def in_grace_period(self):
         if self.status in ("new", "paused"):
