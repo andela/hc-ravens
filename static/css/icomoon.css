@@ -39,6 +39,9 @@
 .icon-delete:before {
   content: "\e872";
 }
+.icon-often:before {
+  content: "\e7f8";
+}
 .icon-mail:before {
   content: "\e159";
 }
