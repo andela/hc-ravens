@@ -36,7 +36,8 @@ class Profile(models.Model):
         path = reverse("hc-check-token", args=[self.user.username, token])
         ctx = {
             "login_link": settings.SITE_ROOT + path,
-            "inviting_profile": inviting_profile
+            "inviting_profile": inviting_profile,
+            "site_root": settings.SITE_ROOT
         }
         emails.login(self.user.email, ctx)
 

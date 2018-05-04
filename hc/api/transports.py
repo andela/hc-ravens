@@ -54,6 +54,7 @@ class Email(Transport):
         ctx = {
             "check": check,
             "checks": self.checks(),
+            "SITE_ROOT": settings.SITE_ROOT,
             "now": timezone.now(),
             "show_upgrade_note": show_upgrade_note
         }
