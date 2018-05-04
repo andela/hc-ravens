@@ -12,6 +12,8 @@ urlpatterns = [
 
     url(r'^check_token/([\w-]+)/([\w-]+)/$',
         views.check_token, name="hc-check-token"),
+    
+    url(r'^reports/$', views.reports_dashboard, name="hc-reports"),
 
     url(r'^profile/$', views.profile, name="hc-profile"),
 

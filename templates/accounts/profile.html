@@ -24,14 +24,50 @@
             <div class="panel-body settings-block">
                 <form method="post">
                     {% csrf_token %}
-                    <h2>Monthly Reports</h2>
+                    <h2>Reports</h2>
+                    <h4>Send me a summary of my checks:</h4>
+                    <ul style="list-style-type:none";>
+                    <li>
+                        <label>
+                            <input
+                                name="reports_allowed"
+                                type="radio"
+                                value="Monthly"
+                                {% if profile.reports_allowed == 'Monthly' %} checked {% endif %}>
+                            Monthly
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input
+                                name="reports_allowed"
+                                type="radio"
+                                value="Weekly"
+                                {% if profile.reports_allowed == "Weekly" %} checked {% endif %}>
+                            Weekly
+                        </label>
+                    </li>
+                    <li>
                     <label>
                         <input
                             name="reports_allowed"
-                            type="checkbox"
-                            {% if profile.reports_allowed %} checked {% endif %}>
-                        Each month send me a summary of my checks
+                            type="radio"
+                            value="Daily"
+                            {% if profile.reports_allowed == "Daily" %}checked{% endif %}>
+                        Daily
                     </label>
+                    </li>
+                    <li>
+                    <label>
+                        <input
+                            name="reports_allowed"
+                            type="radio"
+                            value="Current"
+                            {% if profile.reports_allowed == "Current" %}checked{% endif %}>
+                        Now
+                    </label>
+                    </li>
+                    </ul>
                     <button
                         name="update_reports_allowed"
                         type="submit"
