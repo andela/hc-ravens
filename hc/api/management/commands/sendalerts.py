@@ -21,9 +21,9 @@ class Command(BaseCommand):
         now = timezone.now()
         going_down = query.filter(alert_after__lt=now, status="up")
         going_up = query.filter(alert_after__gt=now, status="down")
-        nag_up = query.filter(nag_after__gt=now, status="nag")
+        nag_on = query.filter(nag_after__lt=now, nag_status=True, status="down")
         # Don't combine this in one query so Postgres can query using index:
-        checks = list(going_down.iterator()) + list(going_up.iterator()) + list(nag_up.iterator())
+        checks = list(going_down.iterator()) + list(going_up.iterator()) + list(nag_on.iterator())
         if not checks:
             return False
 
@@ -45,17 +45,12 @@ class Command(BaseCommand):
         # it won't process this check again.
         now = timezone.now()
         check.status = check.get_status()
-    
-        if check.status == "nag":
-            check.nag_after = now + check.nag
-        check.save()
+        
+        if check.status == "down":
+            check.nag_after = timezone.now() + check.nag
+            check.nag_status = True
 
-        # tmpl = "\nSending alert, status=%s, code=%s\n"
-        # self.stdout.write(tmpl % (check.status, check.code))
-        # errors = check.send_alert()
-        # for ch, error in errors:
-        #     print(ch.kind)
-        #     self.stdout.write("ERROR: %s %s %s\n" % (ch.kind, ch.value, error))
+        check.save()
         self.send_alert(check)
         connection.close()
         return True

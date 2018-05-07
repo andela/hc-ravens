@@ -63,7 +63,7 @@ def checks(request):
         if "grace" in request.json:
             check.grace = td(seconds=request.json["grace"])
         if "nag" in request.json:
-            check.nag = td(second=request.json["nag"])
+            check.nag = td(seconds=request.json["nag"])
 
         check.save()
 
