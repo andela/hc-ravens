@@ -17,7 +17,7 @@
             {% if check.get_status == "new" %}
                 <span class="status icon-up new"
                     data-toggle="tooltip" title="New. Has never received a ping."></span>
-            {% elif check.get_status == "often" %}
+            {% elif check.get_status == "too often" %}
                 <span class="status icon-often"
                     data-toggle="tooltip" title="Too often. Ran too early."></span>
             {% elif check.get_status == "paused" %}
