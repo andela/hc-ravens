@@ -23,11 +23,11 @@ def ping(request, code):
 
     if check.status in ("new", "paused"):
         check.status = "up"
-        
+
     # only confirm if a check is too_often if the check is not in down-wise statuses
     if check.status not in ("down"):
         if check.running_too_often():
-            check.status = "too_often"
+            check.status = "too often"
         else:
             check.status = "up"
 
