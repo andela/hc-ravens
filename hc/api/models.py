@@ -17,11 +17,9 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused"))
-
-    ("paused", "Paused"),
-    ("too often", "Too often")
-)
+    ("paused", "Paused")
+    ("too often", "Too often"))
+    
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
 DEFAULT_NAG =td(hours=1)
