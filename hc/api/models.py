@@ -17,7 +17,7 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused")
+    ("paused", "Paused"),
     ("too often", "Too often"))
     
 DEFAULT_TIMEOUT = td(days=1)
@@ -99,12 +99,8 @@ class Check(models.Model):
         now = timezone.now()
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
-<<<<<<< HEAD
-            
-        return "down"
-=======
 
-        return 'down'
+        return "down"
 
     def running_too_often(self):
         if not self.last_ping:
@@ -114,7 +110,6 @@ class Check(models.Model):
         if self.next_ping - self.grace > now:
             self.send_alert()
             return True
->>>>>>> master
 
     def in_grace_period(self):
         if self.status in ("new", "paused"):
