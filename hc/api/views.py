@@ -84,7 +84,6 @@ def checks(request):
             check.assign_all_channels()
 
         return JsonResponse(check.to_dict(), status=201)
-
     # If request is neither GET nor POST, return "405 Method not allowed"
     return HttpResponse(status=405)
 
