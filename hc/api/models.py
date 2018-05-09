@@ -17,9 +17,8 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused"),
-    ("nag", "Nag")
-)
+    ("paused", "Paused"))
+
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
 DEFAULT_NAG =td(hours=1)
@@ -52,6 +51,7 @@ class Check(models.Model):
     grace = models.DurationField(default=DEFAULT_GRACE)
     nag = models.DurationField(default=DEFAULT_NAG)
     nag_after = models.DateTimeField(null=True, blank=True, editable=False)
+    nag_status = models.BooleanField(default=False)
     n_pings = models.IntegerField(default=0)
     last_ping = models.DateTimeField(null=True, blank=True)
     alert_after = models.DateTimeField(null=True, blank=True, editable=False)
@@ -73,7 +73,7 @@ class Check(models.Model):
         return "%s@%s" % (self.code, settings.PING_EMAIL_DOMAIN)
 
     def send_alert(self):
-        if self.status not in ("up", "down", "nag"):
+        if self.status not in ("up", "down"):
             raise NotImplementedError("Unexpected status: %s" % self.status)
 
         errors = []
@@ -93,13 +93,9 @@ class Check(models.Model):
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
 
-        if self.last_ping + self.timeout + self.grace + self.nag < now:
-            return "nag"
-
         if self.last_ping + self.timeout + self.grace < now:
             return "down"
-
-        # return "nag"
+        return "nag"
 
     def in_grace_period(self):
         if self.status in ("new", "paused"):
@@ -109,6 +105,10 @@ class Check(models.Model):
         grace_ends = up_ends + self.grace
         return up_ends < timezone.now() < grace_ends
 
+    def in_nag_period(self):
+        now = timezone.now()
+        if  self.last_ping + self.timeout + self.grace + self.nag < now:
+            return "nag"
 
     def assign_all_channels(self):
         if self.user:
