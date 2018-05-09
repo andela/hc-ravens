@@ -3,7 +3,7 @@
 
 <h1>Hello,</h1>
 <p>
-    This is a notification sent by <a href="https://healthchecks.io">healthchecks.io</a>.
+    This is a notification sent by <a href="{{ SITE_ROOT }}">{{ SITE_ROOT }}</a>.
     <br />
     {% if check.status == "nag" %}
         The check <strong>{{ check.name_then_code }}</strong> is still <strong>DOWN</strong>.
@@ -24,7 +24,7 @@
 {% if show_upgrade_note %}
 <p><strong>P.S.</strong>
 Find this service useful? Support it by upgrading to
-a <a href="https://healthchecks.io/pricing/">premium account</a>!
+a <a href="{{  SITE_ROOT }}/pricing/">premium account</a>!
 </p>
 {% endif %}
 

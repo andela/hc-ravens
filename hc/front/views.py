@@ -59,6 +59,35 @@ def my_checks(request):
 
     return render(request, "front/my_checks.html", ctx)
 
+@login_required
+def unresolved_checks(request):
+    q = Check.objects.filter(user=request.team.user).order_by("created")
+    checks = list(q)
+
+    counter = Counter()
+    down_tags = set()
+    checks = [ch for ch in checks if ch.get_status() == "down"]
+    for check in checks:
+
+        for tag in check.tags_list():
+            if tag == "":
+                continue
+
+            counter[tag] += 1
+
+            down_tags.add(tag)
+
+    ctx = {
+        "page": "unresolved",
+        "checks": checks,
+        "now": timezone.now(),
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+
+    return render(request, "front/unresolved.html", ctx)
+
 
 def _welcome_check(request):
     check = None
@@ -164,7 +193,12 @@ def update_timeout(request, code):
     if form.is_valid():
         check.timeout = td(seconds=form.cleaned_data["timeout"])
         check.grace = td(seconds=form.cleaned_data["grace"])
+<<<<<<< HEAD
         check.nag = td(seconds=form.cleaned_data["nag"])
+=======
+        if check.last_ping:
+            check.next_ping = check.last_ping + check.timeout
+>>>>>>> master
         check.save()
 
     return redirect("hc-checks")
