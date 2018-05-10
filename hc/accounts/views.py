@@ -306,7 +306,7 @@ def switch_team(request, target_username):
 @login_required
 def reports_dashboard(request):
     profile = request.user.profile
-    new = Check.objects.filter(user=request.user)
+    new = Check.objects.filter(user=request.user).order_by("priority")
     q = new.filter(last_ping__isnull=False)
 
     checks = list(q)
