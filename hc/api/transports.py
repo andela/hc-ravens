@@ -6,6 +6,7 @@ import requests
 from six.moves.urllib.parse import quote
 
 from hc.lib import emails
+from django.contrib.auth.models import User
 
 
 def tmpl(template_name, **ctx):
@@ -58,7 +59,10 @@ class Email(Transport):
             "now": timezone.now(),
             "show_upgrade_note": show_upgrade_note
         }
+        if check.priority_email is not None:
+            emails.alert(self.channel.value, ctx)
         emails.alert(self.channel.value, ctx)
+        emails.alert(check.priority_email, ctx)
 
 
 class HttpTransport(Transport):
