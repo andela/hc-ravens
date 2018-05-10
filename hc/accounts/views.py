@@ -337,5 +337,5 @@ def reports_dashboard(request):
         "ping_endpoint": settings.PING_ENDPOINT
     }
 
-    
+
     return render(request, 'accounts/reports.html', ctx, new)

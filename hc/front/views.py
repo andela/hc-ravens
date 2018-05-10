@@ -89,6 +89,29 @@ def unresolved_checks(request):
     return render(request, "front/unresolved.html", ctx)
 
 
+@login_required
+def department_checks(request):
+    q = Check.objects.filter(user=request.team.user).order_by("created")
+    checks = list(q)
+
+
+    counter = Counter()
+    down_tags, grace_tags = set(), set()
+
+    ctx = {
+        "page": "department_checks",
+        "department": "IT", #user department
+        "checks": checks,
+        "now": timezone.now(),
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+
+    }
+    return render(request, 'front/department_checks.html', ctx)
+
+
+
 def _welcome_check(request):
     check = None
     if "welcome_code" in request.session:
