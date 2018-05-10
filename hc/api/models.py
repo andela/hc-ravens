@@ -18,11 +18,12 @@ STATUSES = (
     ("down", "Down"),
     ("new", "New"),
     ("paused", "Paused"),
-    ("too often", "Too often")
-)
+    ("too often", "Too often"))
+
 PRIORITIES = ((0, "High"), (1, "Medium"), (2, "Low"))
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
+DEFAULT_NAG =td(hours=1)
 CHANNEL_KINDS = (("email", "Email"), ("webhook", "Webhook"),
                  ("hipchat", "HipChat"),
                  ("slack", "Slack"), ("pd", "PagerDuty"), ("po", "Pushover"),
@@ -47,9 +48,15 @@ class Check(models.Model):
     tags = models.CharField(max_length=500, blank=True)
     code = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
     user = models.ForeignKey(User, blank=True, null=True)
+    membership_access = models.BooleanField(default=False)
+    member_id = models.IntegerField(default=0)
+    priority_email = models.CharField(null=True, max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     timeout = models.DurationField(default=DEFAULT_TIMEOUT)
     grace = models.DurationField(default=DEFAULT_GRACE)
+    nag = models.DurationField(default=DEFAULT_NAG)
+    nag_after = models.DateTimeField(null=True, blank=True, editable=False)
+    nag_status = models.BooleanField(default=False)
     n_pings = models.IntegerField(default=0)
     last_ping = models.DateTimeField(null=True, blank=True)
     next_ping = models.DateTimeField(null=True, blank=True)
@@ -98,7 +105,7 @@ class Check(models.Model):
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
 
-        return 'down'
+        return "down"
 
     def running_too_often(self):
         if not self.last_ping:
@@ -116,6 +123,11 @@ class Check(models.Model):
         up_ends = self.last_ping + self.timeout
         grace_ends = up_ends + self.grace
         return up_ends < timezone.now() < grace_ends
+
+    def in_nag_period(self):
+        now = timezone.now()
+        if  self.last_ping + self.timeout + self.grace + self.nag < now:
+            return "nag"
 
     def assign_all_channels(self):
         if self.user:
@@ -135,6 +147,7 @@ class Check(models.Model):
             "tags": self.tags,
             "timeout": int(self.timeout.total_seconds()),
             "grace": int(self.grace.total_seconds()),
+            "nag":int(self.nag.total_seconds()),
             "n_pings": self.n_pings,
             "status": self.get_status(),
             "priority":self.priority

@@ -73,6 +73,8 @@ def checks(request):
             check.timeout = td(seconds=request.json["timeout"])
         if "grace" in request.json:
             check.grace = td(seconds=request.json["grace"])
+        if "nag" in request.json:
+            check.nag = td(second=request.json["nag"])
 
         check.save()
 
@@ -82,7 +84,6 @@ def checks(request):
             check.assign_all_channels()
 
         return JsonResponse(check.to_dict(), status=201)
-
     # If request is neither GET nor POST, return "405 Method not allowed"
     return HttpResponse(status=405)
 
