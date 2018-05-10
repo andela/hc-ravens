@@ -35,11 +35,28 @@
             <div data-name="{{ check.name }}"
                     data-tags="{{ check.tags }}"
                     data-url="{% url 'hc-update-name' check.code %}"
-                    class="my-checks-name {% if not check.name %}unnamed{% endif %}">
+                    class="my-checks-name {% if not check.name %}unnamed{% endif %}"
+                    id="check-{{ check.priority }}">
                 <div>{{ check.name|default:"unnamed" }}</div>
                 {% for tag in check.tags_list %}
-                <span class="label label-tag">{{ tag }}</span>
+                    <span class="label label-tag">{{ tag }}</span>
+                    <br/>
                 {% endfor %}
+                {% if check.priority == 0 %}
+                <span class="label label label-danger" id="{{ check.priority }}">
+                    High priority
+                </span>
+                {% endif %}
+                {% if check.priority == 1 %}
+                <span class="label label label-warning" id="{{ check.priority }}">
+                    Medium priority
+                </span>
+                {% endif %}
+                {% if check.priority == 2 %}                
+                <span class="label label label-info" id="{{ check.priority }}">
+                    Low priority
+                </span>
+                {% endif %}
             </div>
         </td>
         <td class="url-cell">
