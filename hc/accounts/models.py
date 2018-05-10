@@ -84,6 +84,7 @@ class Profile(models.Model):
         user.profile.save()
         check.membership_access = True
         check.member_id = int(user.id)
+        check.priority_email = user.email
         check.save()
 
         user.profile.send_instant_login_link(self)
