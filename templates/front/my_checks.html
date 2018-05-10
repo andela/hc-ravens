@@ -58,7 +58,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="update-timeout-title">Name and Tags</h4>
+                    <h4 class="update-timeout-title">Name,Tags and Priority</h4>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
@@ -97,6 +97,22 @@
                                 <span class="help-block">
                                     Optionally, assign tags for easy filtering.
                                     Separate multiple tags with spaces.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="update-name-input" class="col-sm-2 control-label">
+                               Priority
+                            </label>
+                            <div class="col-sm-9">
+                                    <select class="input-name form-control" id="update-priority-input" name="priority" type="text" class="input-name form-control">
+                                        <option id="low" value="2">Low Priority</option>
+                                        <option id="medium" value="1">Medium Priority</option>
+                                        <option id="high" value="0">High Priority</option>
+                                    </select>
+                                <span class="help-block">
+                                    Set check priority
                                 </span>
                             </div>
                         </div>
