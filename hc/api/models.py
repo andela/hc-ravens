@@ -20,6 +20,7 @@ STATUSES = (
     ("paused", "Paused"),
     ("too often", "Too often")
 )
+PRIORITIES = ((0, "High"), (1, "Medium"), (2, "Low"))
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
 CHANNEL_KINDS = (("email", "Email"), ("webhook", "Webhook"),
@@ -54,6 +55,7 @@ class Check(models.Model):
     next_ping = models.DateTimeField(null=True, blank=True)
     alert_after = models.DateTimeField(null=True, blank=True, editable=False)
     status = models.CharField(max_length=9, choices=STATUSES, default="new")
+    priority = models.IntegerField(default=2, choices=PRIORITIES)
 
     def name_then_code(self):
         if self.name:
@@ -134,7 +136,8 @@ class Check(models.Model):
             "timeout": int(self.timeout.total_seconds()),
             "grace": int(self.grace.total_seconds()),
             "n_pings": self.n_pings,
-            "status": self.get_status()
+            "status": self.get_status(),
+            "priority":self.priority
         }
 
         if self.last_ping:
@@ -165,6 +168,7 @@ class Channel(models.Model):
     value = models.TextField(blank=True)
     email_verified = models.BooleanField(default=False)
     checks = models.ManyToManyField(Check)
+
 
     def assign_all_checks(self):
         checks = Check.objects.filter(user=self.user)
