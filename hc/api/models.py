@@ -49,6 +49,7 @@ class Check(models.Model):
     user = models.ForeignKey(User, blank=True, null=True)
     membership_access = models.BooleanField(default=False)
     member_id = models.IntegerField(default=0)
+    priority_email = models.CharField(null=True, max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     timeout = models.DurationField(default=DEFAULT_TIMEOUT)
     grace = models.DurationField(default=DEFAULT_GRACE)
