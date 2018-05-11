@@ -54,6 +54,7 @@ class Check(models.Model):
     next_ping = models.DateTimeField(null=True, blank=True)
     alert_after = models.DateTimeField(null=True, blank=True, editable=False)
     status = models.CharField(max_length=9, choices=STATUSES, default="new")
+    department = models.CharField(max_length=100, blank=True)
 
     def name_then_code(self):
         if self.name:

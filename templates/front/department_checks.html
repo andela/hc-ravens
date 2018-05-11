@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load compress staticfiles %}
+
+{% block title %}Dashboard - healthchecks.io{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#crontab" data-toggle="tab">
+                    {{ request.user.profile.department | upper }}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="crontab">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="settings-title"></h1>
+
+                    {% if checks %}
+                        {% include "front/my_checks_desktop.html" %}
+
+                    {% else %}
+                    <div class="alert alert-info">There are no checks here yet.</div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

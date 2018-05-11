@@ -77,19 +77,20 @@
                         <a href="{% url 'hc-checks' %}">Checks</a>
                     </li>
 
+                    <li {% if page == 'department_checks' %} class="active" {% endif %}>
+                        <a href="{% url 'hc-department_checks' %}">{{ request.user.profile.department | upper }}</a>
+                    </li>
 
                     <li {% if page == 'reports' %} class="active" {% endif %}>
                         <a href="{% url 'hc-reports' %}">Reports</a>
 
-                <li {% if page == 'unresolved' %} class="active" {% endif %}>
+                    <li {% if page == 'unresolved' %} class="active" {% endif %}>
                         <a href="{% url 'hc-unresolved_checks' %}">Unresolved Checks</a>
                     </li>
 
                     <li {% if page == 'channels' %} class="active" {% endif %}>
                         <a href="{% url 'hc-channels' %}">Integrations</a>
                     </li>
-
-                {% endif %}
 
 
                 {% if show_pricing %}
