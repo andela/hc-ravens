@@ -76,11 +76,11 @@
                     <li {% if page == 'checks' %} class="active" {% endif %}>
                         <a href="{% url 'hc-checks' %}">Checks</a>
                     </li>
-
+                    {% if request.user.profile.department %}
                     <li {% if page == 'department_checks' %} class="active" {% endif %}>
                         <a href="{% url 'hc-department_checks' %}">{{ request.user.profile.department | upper }}</a>
                     </li>
-
+                    {% endif %}
                     <li {% if page == 'reports' %} class="active" {% endif %}>
                         <a href="{% url 'hc-reports' %}">Reports</a>
 
