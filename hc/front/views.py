@@ -102,7 +102,6 @@ def department_checks(request):
 
     ctx = {
         "page": "department_checks",
-        "department": "IT", #user department
         "checks": checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
