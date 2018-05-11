@@ -24,6 +24,7 @@ class Profile(models.Model):
     token = models.CharField(max_length=128, blank=True)
     api_key = models.CharField(max_length=128, blank=True)
     current_team = models.ForeignKey("self", null=True)
+    department = models.CharField(max_length=128, null=True)
 
     def __str__(self):
         return self.team_name or self.user.email
@@ -74,13 +75,14 @@ class Profile(models.Model):
 
         emails.report(self.user.email, ctx)
 
-    def invite(self, user):
+    def invite(self, user, department):
         member = Member(team=self, user=user)
         member.save()
 
         # Switch the invited user over to the new team so they
         # notice the new team on next visit:
         user.profile.current_team = self
+        user.profile.department = department
         user.profile.save()
 
         user.profile.send_instant_login_link(self)
