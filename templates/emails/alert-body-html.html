@@ -5,9 +5,17 @@
 <p>
     This is a notification sent by <a href="{{ SITE_ROOT }}">{{ SITE_ROOT }}</a>.
     <br />
-    The check <strong>{{ check.name_then_code }}</strong>
-    has gone <strong>{{ check.status|upper }}</strong>.
-</p>
+    {% if check.status == "nag" %}
+        The check <strong>{{ check.name_then_code }}</strong> is still <strong>DOWN</strong>.
+        <br />
+        To stop receiving notifications Please resolve your cron job.
+
+        {% else %}
+
+        The check <strong>{{ check.name_then_code }}
+        has gone <strong>{{ check.status|upper }}</strong>.
+    {% endif %}
+</p>        
 
 <p>Here is a summary of all your checks:</p>
 
