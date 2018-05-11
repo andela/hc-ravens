@@ -25,6 +25,8 @@ class Profile(models.Model):
     api_key = models.CharField(max_length=128, blank=True)
     current_team = models.ForeignKey("self", null=True)
     department = models.CharField(max_length=128, null=True)
+    test = models.CharField(max_length=344)
+
 
     def __str__(self):
         return self.team_name or self.user.email
