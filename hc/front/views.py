@@ -91,7 +91,9 @@ def unresolved_checks(request):
 
 @login_required
 def department_checks(request):
-    q = Check.objects.filter(user=request.team.user).order_by("created")
+    user = request.team.user
+    department = request.user.profile.department
+    q = Check.objects.filter(user=user, department=department).order_by("created")
     checks = list(q)
 
 
