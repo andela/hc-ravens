@@ -40,6 +40,7 @@
                 {% for tag in check.tags_list %}
                 <span class="label label-tag">{{ tag }}</span>
                 {% endfor %}
+                <span class="label label-primary">{{ check.department|upper }}</span>
             </div>
         </td>
         <td class="url-cell">
