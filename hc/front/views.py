@@ -581,5 +581,8 @@ def privacy(request):
     return render(request, "front/privacy.html", {})
 
 
+def faqs(request):
+    return render(request, "front/faqs.html", {})
+
 def terms(request):
     return render(request, "front/terms.html", {})

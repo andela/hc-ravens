@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<header>
+<div class="row">
+    <h1>FAQ's <small>Frequently Asked Questions</small></h1>
+    <br />
+</div>
+</header>
+<div class="container">
+        <div class="row content">
+            <div class="col-sm-4 sidenav">
+                <h4>FAQ's</h4>
+                  <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#basics">Basics</a></li>
+                        <li><a href="#mobile">Mobile</a></li>
+                        <li><a href="#account">Account</a></li>
+                  </ul>
+                  <br><br><br>
+                  <iframe width="300" height="280" src="https://www.youtube.com/embed/WzIqEJkK_pM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+
+<div class="col-md-8">
+<div class="row video_row">
+        <h1 class="">Getting Started</h1><small>Watch this short tutorial</small>
+            <div class="help_video"><iframe width="550" height="280" src="https://www.youtube.com/embed/ljgvo2jM234" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+</div><br />
+<div><span class="label label-primary">Basic</span></div><br />
+<div class="row newer-question">
+    <button id="first_button" class="btn btn-group-lg"><h4>+ WHAT DOES HEALTHCHECKS DO?</h4></button>
+    <div id="firstQuestion"><b>Health Checks is a platform that monitors your con jobs and notifies you of their status.</b></div>
+</div>
+
+<div class="row newer-question">
+    <button type="button" id="second_button" class="btn btn-group-lg"><h4>+ WHAT IS A CRON JOB?</h4></button>
+    <div id="secondQuestion"><b>This are tasks that are created on your server to run automatically after a period of time</b></div>   
+</div>
+
+<div class="row  newer-question">
+    <button type="button"  id="third_button" class="btn btn-group-lg"><h4>+ HOW DOES IT NOTIFY ME?</h4></button>
+    <div id="thirdQuestion"><b>It will send notifications through your preferred channel.</b></It></div>   
+</div>
+
+<div class="row  newer-question">
+    <button type="button" id="fourth_button" class="btn btn-group-lg"><h4>+ WHAT ARE THE CHANNELS OF COMMUNICATION?</h4></button>
+    <div id="fourthQuestion"><b>The notifications will be sent through email,sms, slack and telegram plus other common channels.</b></div>   
+</div>
+
+<div class="row newer-question">
+    <button type="button" id="fifth_button" class="btn btn-group-lg"><h4>+ WILL IT NAG ME?</h4></button>
+    <div id="fifthQuestion"><b>Yes it will nag you if you do not attend to a cron job that is down.</b></div>   
+</div>
+
+<div class="row newer-question">
+    <button type="button" id="sixth_button" class="btn btn-group-lg"><h4>+ WHY SHOULD I USE HEALTHCHECKS?</h4></button>
+    <div id="sixthQuestion"><b>It will give you peace of mind as you are sure any down time will be reported immediately.</b></div><br/>
+</div>
+
+<div><small><span class="label label-primary" id="mobile">Mobile</span></small></div><br />
+<div class="row newer-question">
+        <button type="button" id="seventh_button" class="btn btn-group-lg"><h4>+ How does syncing work?</h4></button>
+        <div id="seventhQuestion"><b>When an email is registered any device connected to the health checks app is automatically syncronised.</b></div>   
+</div>
+
+<div class="row newer-question">
+        <button type="button" id="eighth_button" class="btn btn-group-lg"><h4>+ Does the app work on mobile phone??</h4></button>
+        <div id="eighthQuestion"><b>The Site is modified to work on any App hence can be accessed on any mobile phone device..</b></div>   
+</div><br />
+
+<div><small><span class="label label-primary" id="account">Account</span></small></div><br />
+<div class="row newer-question">    
+    <button type="button" id="10_button" class="btn btn-group-lg"><h4>+ HOW DO I PAY?</h4></button>
+    <div id="10Question"><b>Payments are through mastercard, Visa, PayPal and American Express.</b></div>   
+</div>
+<div class="row newer-question">
+    <button type="button" id="11_button" class="btn btn-group-lg"><h4>+ WHAT PROGRAMMING LANGUAGES CAN I USE HEALTHCHECKS WITH?</h4></button>
+    <div id="11Question"><b>You can use it with any language that can fetch a url. Like python and ruby.</b></div>   
+</div>
+
+<div class="row newer-question">
+    <button type="button" id="12_button" class="btn btn-group-lg"><h4>+ HOW LONG IS IT BETWEEN PINGS?</h4></button>
+    <div id="12Question"><b>You can configure the period between each ping according to your preference.</b></div>   
+</div>
+</div>
+
+<script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '14b25c29-a77b-4966-a5d0-e53ec7d23c48', f: true }); done = true; } }; })();</script>
+
+    
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/faqs.js' %}"></script>
+<script src="{% static 'js/log.js' %}"></script>
+{% endblock %}
