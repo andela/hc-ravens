@@ -142,7 +142,7 @@ def profile(request):
         request.team = profile
         profile.current_team_id = profile.id
         profile.save()
-    
+
     check_db = Check.objects.filter(user=request.user).order_by("created")
     checks = list(check_db)
     checks.append(check_db)
@@ -190,13 +190,15 @@ def profile(request):
 
                 email = form.cleaned_data["email"]
                 check_name = form.cleaned_data["check"]
+                department = form.cleaned_data["team_member_department"]
                 try:
                     user = User.objects.get(email=email)
                 except User.DoesNotExist:
                     user = _make_user(email)
                 check_object = Check.objects.get(name=check_name)
-                profile.invite(user, check_object)   
+                profile.invite(user, check_object, department)
                 messages.success(request, "Invitation to %s sent!" % email)
+                
         elif "remove_team_member" in request.POST:
             form = RemoveTeamMemberForm(request.POST)
             if form.is_valid():
@@ -342,5 +344,5 @@ def reports_dashboard(request):
         "ping_endpoint": settings.PING_ENDPOINT
     }
 
-    
+
     return render(request, 'accounts/reports.html', ctx, new)

@@ -54,11 +54,12 @@
                     Medium priority
                 </span>
                 {% endif %}
-                {% if check.priority == 2 %}                
+                {% if check.priority == 2 %}
                 <span class="label label label-info" id="{{ check.priority }}">
                     Low priority
                 </span>
                 {% endif %}
+                <span class="label label-primary">{{ check.department|upper }}</span>
             </div>
         </td>
         <td class="url-cell">
